@@ -72,7 +72,7 @@ class GamePageState extends State<GamePage> {
     bookmarked = initBookmark();
     info.then((gameinfo) {
       if (gameinfo != null) {
-        bookmarked = dbManager.checkIfGameExists(gameinfo!.gameId);
+        bookmarked = dbManager.checkIfGameExists(gameinfo.gameId);
       }
     });
   }
@@ -197,8 +197,6 @@ class GamePageState extends State<GamePage> {
                             style: ElevatedButton.styleFrom(
                               disabledBackgroundColor: Color(0xffFF5F1F),
                               disabledForegroundColor: Colors.white,
-                              primary: Color(0xffFF5F1F),
-                              onPrimary: Colors.white,
                               shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.circular(20), // <-- Radius
@@ -265,19 +263,22 @@ class GamePageState extends State<GamePage> {
                         Column(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
-                              ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                    primary: Color(0xffA020F0),
-                                    onPrimary: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          10), // <-- Radius
-                                    ),
-                                    elevation: 3),
-                                onPressed: () {},
-                                child: Text(
-                                  info.price!,
-                                  style: TextStyle(fontSize: 20),
+                              Container(
+                                height: 35,
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(
+                                      foregroundColor: Colors.white,
+                                      backgroundColor: Color(0xffA020F0),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            1), // <-- Radius
+                                      ),
+                                      elevation: 3),
+                                  onPressed: () {},
+                                  child: Text(
+                                    info.price!,
+                                    style: TextStyle(fontSize: 25),
+                                  ),
                                 ),
                               ),
                               Text(
@@ -288,19 +289,22 @@ class GamePageState extends State<GamePage> {
                             ]),
                       if (info.free)
                         Column(children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                primary: Color(0xffA020F0),
-                                onPrimary: Colors.white,
-                                shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.circular(10), // <-- Radius
-                                ),
-                                elevation: 3),
-                            onPressed: () {},
-                            child: Text(
-                              'Free',
-                              style: TextStyle(fontSize: 20),
+                          Container(
+                            height: 35,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  foregroundColor: Colors.white,
+                                  backgroundColor: Color(0xffA020F0),
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius:
+                                        BorderRadius.circular(1), // <-- Radius
+                                  ),
+                                  elevation: 3),
+                              onPressed: () {},
+                              child: Text(
+                                'Free',
+                                style: TextStyle(fontSize: 25),
+                              ),
                             ),
                           ),
                           Text(
@@ -318,9 +322,9 @@ class GamePageState extends State<GamePage> {
                           children: [
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  primary:
+                                  foregroundColor: Colors.white,
+                                  backgroundColor:
                                       getCriticColor((info.score! / 100.0)),
-                                  onPrimary: Colors.white,
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.circular(10), // <-- Radius
@@ -346,10 +350,10 @@ class GamePageState extends State<GamePage> {
                     Center(
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
+                          foregroundColor: Colors.white,
+                          backgroundColor: Colors.greenAccent,
                           disabledBackgroundColor: Colors.greenAccent,
                           disabledForegroundColor: Colors.black,
-                          primary: Colors.greenAccent,
-                          onPrimary: Colors.white,
                           shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.circular(5), // <-- Radius
