@@ -7,6 +7,7 @@ import 'package:basic_flutter_app/GameInfo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
+import 'package:url_launcher/url_launcher.dart';
 
 class GameDetails {
   Future<GameInfo?> fetchGameByAppID(int appid) async {
@@ -85,6 +86,14 @@ class GamePageState extends State<GamePage> {
       return Color.lerp(startColor, Colors.orange, t / middle);
     } else {
       return Color.lerp(Colors.orange, endColor, (t - middle) / middle);
+    }
+  }
+
+  Future openUrl(String? url) async {
+    if (url == null) return;
+    Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri);
     }
   }
 
@@ -274,7 +283,12 @@ class GamePageState extends State<GamePage> {
                                             1), // <-- Radius
                                       ),
                                       elevation: 3),
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    print(info.website);
+                                    setState(() {
+                                      openUrl(info.website);
+                                    });
+                                  },
                                   child: Text(
                                     info.price!,
                                     style: TextStyle(fontSize: 25),
@@ -300,7 +314,11 @@ class GamePageState extends State<GamePage> {
                                         BorderRadius.circular(1), // <-- Radius
                                   ),
                                   elevation: 3),
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  openUrl(info.website);
+                                });
+                              },
                               child: Text(
                                 'Free',
                                 style: TextStyle(fontSize: 25),
@@ -330,7 +348,11 @@ class GamePageState extends State<GamePage> {
                                         BorderRadius.circular(10), // <-- Radius
                                   ),
                                   elevation: 3),
-                              onPressed: () {},
+                              onPressed: () {
+                                setState(() {
+                                  openUrl(info.criticsite);
+                                });
+                              },
                               child: Text(
                                 '${info.score!}',
                                 style: TextStyle(fontSize: 50),

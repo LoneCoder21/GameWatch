@@ -7,8 +7,10 @@ class GameInfo {
   final String desc;
   final String devs, pubs;
   final String? price;
+  final String? website;
   final bool free;
   final int? score;
+  final String? criticsite;
   final String release_date;
   final bool coming_soon;
   final List<String> genres;
@@ -23,6 +25,8 @@ class GameInfo {
     required this.price,
     required this.free,
     required this.score,
+    required this.website,
+    required this.criticsite,
     required this.release_date,
     required this.coming_soon,
     required this.genres,
@@ -47,11 +51,19 @@ class GameInfo {
       price = json['price_overview']['final_formatted'];
     }
     int? score = null;
+    String? criticsite = null;
     if (json['metacritic'] != null && json['metacritic']['score'] != null) {
       score = json['metacritic']['score'];
+      if (json['metacritic']['url'] != null) {
+        criticsite = json['metacritic']['url'];
+      }
     }
     bool coming_soon = json['release_date']['coming_soon'];
     String releasedate = json['release_date']['date'];
+    String? website = null;
+    if (json['website'] != null) {
+      website = json['website'];
+    }
     List<String> genres = [];
     if (json['genres'] != null) {
       for (Map<String, dynamic> m in json['genres']) {
@@ -70,6 +82,8 @@ class GameInfo {
         price: price,
         free: free,
         score: score,
+        website: website,
+        criticsite: criticsite,
         release_date: releasedate,
         coming_soon: coming_soon,
         genres: genres);
