@@ -97,6 +97,12 @@ class GamePageState extends State<GamePage> {
     }
   }
 
+  Future<bool> urlf(String? url) async {
+    if (url == null) return false;
+    Uri uri = Uri.parse(url);
+    return await (canLaunchUrl(uri));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -277,18 +283,23 @@ class GamePageState extends State<GamePage> {
                                 child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
                                       foregroundColor: Colors.white,
+                                      disabledForegroundColor: Colors.white,
                                       backgroundColor: Color(0xffA020F0),
+                                      disabledBackgroundColor:
+                                          Color(0xffA020F0),
                                       shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(
                                             1), // <-- Radius
                                       ),
                                       elevation: 3),
-                                  onPressed: () {
-                                    print(info.website);
-                                    setState(() {
-                                      openUrl(info.website);
-                                    });
-                                  },
+                                  onPressed: info.website != null
+                                      ? () {
+                                          print(info.website);
+                                          setState(() {
+                                            openUrl(info.website);
+                                          });
+                                        }
+                                      : null,
                                   child: Text(
                                     info.price!,
                                     style: TextStyle(fontSize: 25),
@@ -308,17 +319,22 @@ class GamePageState extends State<GamePage> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
+                                  disabledForegroundColor: Colors.white,
                                   backgroundColor: Color(0xffA020F0),
+                                  disabledBackgroundColor: Color(0xffA020F0),
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.circular(1), // <-- Radius
                                   ),
                                   elevation: 3),
-                              onPressed: () {
-                                setState(() {
-                                  openUrl(info.website);
-                                });
-                              },
+                              onPressed: info.website != null
+                                  ? () {
+                                      print(info.website);
+                                      setState(() {
+                                        openUrl(info.website);
+                                      });
+                                    }
+                                  : null,
                               child: Text(
                                 'Free',
                                 style: TextStyle(fontSize: 25),
@@ -341,18 +357,23 @@ class GamePageState extends State<GamePage> {
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   foregroundColor: Colors.white,
+                                  disabledForegroundColor: Colors.white,
                                   backgroundColor:
+                                      getCriticColor((info.score! / 100.0)),
+                                  disabledBackgroundColor:
                                       getCriticColor((info.score! / 100.0)),
                                   shape: RoundedRectangleBorder(
                                     borderRadius:
                                         BorderRadius.circular(10), // <-- Radius
                                   ),
                                   elevation: 3),
-                              onPressed: () {
-                                setState(() {
-                                  openUrl(info.criticsite);
-                                });
-                              },
+                              onPressed: info.criticsite != null
+                                  ? () {
+                                      setState(() {
+                                        openUrl(info.criticsite);
+                                      });
+                                    }
+                                  : null,
                               child: Text(
                                 '${info.score!}',
                                 style: TextStyle(fontSize: 50),
