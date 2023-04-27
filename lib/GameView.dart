@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 
 class GameDetails {
   Future<GameInfo?> fetchGameByAppID(int appid) async {
@@ -197,7 +198,32 @@ class GamePageState extends State<GamePage> {
                       ],
                     ),
                   ),
-                  Image.network(info.img),
+                  if (info.images.length == 1) Image.network(info.images[0]),
+                  if (info.images.length > 1)
+                    CarouselSlider.builder(
+                      itemCount: info.images.length,
+                      itemBuilder: (BuildContext context, int index,
+                              int pageViewIndex) =>
+                          Container(
+                        margin: EdgeInsets.all(0.0),
+                        child: Image.network(
+                          info.images[index],
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      options: CarouselOptions(
+                        initialPage: 0,
+                        enableInfiniteScroll: true,
+                        reverse: false,
+                        autoPlay: true,
+                        autoPlayInterval: Duration(seconds: 3),
+                        autoPlayAnimationDuration: Duration(milliseconds: 1000),
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enlargeCenterPage: true,
+                        enlargeFactor: 0.17,
+                        scrollDirection: Axis.horizontal,
+                      ),
+                    ),
                   SizedBox(
                     height: 5,
                   ),

@@ -1,5 +1,3 @@
-import 'package:basic_flutter_app/Game.dart';
-
 class GameInfo {
   final int gameId;
   final String name;
@@ -14,6 +12,7 @@ class GameInfo {
   final String release_date;
   final bool coming_soon;
   final List<String> genres;
+  final List<String> images;
 
   const GameInfo({
     required this.gameId,
@@ -30,6 +29,7 @@ class GameInfo {
     required this.release_date,
     required this.coming_soon,
     required this.genres,
+    required this.images,
   });
 
   factory GameInfo.fromMap(Map<String, dynamic> json) {
@@ -72,20 +72,32 @@ class GameInfo {
     } else {
       genres.add('Tagless');
     }
+    List<String> images = [];
+    if (json['screenshots'] != null) {
+      for (Map<String, dynamic> m in json['screenshots']) {
+        if (m['path_thumbnail'] != null) {
+          images.add(m['path_thumbnail']);
+        }
+      }
+    } else {
+      images.add(img);
+    }
     return GameInfo(
-        gameId: id,
-        name: name,
-        img: img,
-        desc: desc,
-        devs: devs,
-        pubs: pubs,
-        price: price,
-        free: free,
-        score: score,
-        website: website,
-        criticsite: criticsite,
-        release_date: releasedate,
-        coming_soon: coming_soon,
-        genres: genres);
+      gameId: id,
+      name: name,
+      img: img,
+      desc: desc,
+      devs: devs,
+      pubs: pubs,
+      price: price,
+      free: free,
+      score: score,
+      website: website,
+      criticsite: criticsite,
+      release_date: releasedate,
+      coming_soon: coming_soon,
+      genres: genres,
+      images: images,
+    );
   }
 }
