@@ -63,8 +63,6 @@ class SavedPageState extends State<SavedPage> {
                               savedgames = dbManager.getSavedList();
                             });
                           });
-
-                          print('Out');
                         },
                         child: CachedNetworkImage(
                           imageUrl: gs[index].headerImg,

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:basic_flutter_app/IntroView1.dart';
-import 'package:basic_flutter_app/IntroView2.dart';
 import 'package:basic_flutter_app/IntroView3.dart';
 
 class IntroView2 extends StatelessWidget {
@@ -41,13 +40,17 @@ class IntroView2 extends StatelessWidget {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const IntroView1(),
+                    ),
+                  );
                 },
                 child: Text('Previous'),
               ),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const IntroView3(),
                     ),

@@ -1,3 +1,4 @@
+import 'package:basic_flutter_app/IntroView2.dart';
 import 'package:flutter/material.dart';
 import 'package:basic_flutter_app/MainBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,14 +53,18 @@ class _HomePageState3 extends State<HomePage3> {
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(
+                      builder: (context) => const IntroView2(),
+                    ),
+                  );
                 },
                 child: Text('Previous'),
               ),
               TextButton(
                 onPressed: () {
                   _setStatus();
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const MainBar(),
                     ),

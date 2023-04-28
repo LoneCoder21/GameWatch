@@ -68,7 +68,7 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 10),
               TextButton(
                 onPressed: () {
-                  Navigator.of(context).push(
+                  Navigator.of(context).pushReplacement(
                     MaterialPageRoute(
                       builder: (context) => const IntroView2(),
                     ),

@@ -4,6 +4,7 @@ import 'package:basic_flutter_app/DataBase.dart';
 import 'package:basic_flutter_app/Game.dart';
 import 'package:basic_flutter_app/GameCard.dart';
 import 'package:basic_flutter_app/GameView.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -85,9 +86,7 @@ class SearchPageState extends State<SearchPage> {
   late Future<List<Game>> games;
   late Future<List<GameCard>>? searched_games;
 
-  void handleText() {
-    final text = controller.text;
-  }
+  void handleText() {}
 
   Future<List<GameCard>> initGames() async {
     return [];
@@ -186,9 +185,11 @@ class SearchPageState extends State<SearchPage> {
                               ),
                             );
                           },
-                          leading: Image.network(
-                            gs[index].headerImg,
-                            fit: BoxFit.fill,
+                          leading: SizedBox(
+                            width: 125,
+                            child: CachedNetworkImage(
+                                imageUrl: gs[index].headerImg,
+                                fit: BoxFit.fill),
                           ),
                           title: Text(gs[index].name));
                     },

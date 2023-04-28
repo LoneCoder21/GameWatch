@@ -1,12 +1,9 @@
 import 'dart:convert';
-import 'dart:async';
 import 'package:basic_flutter_app/DataBase.dart';
 import 'package:flutter/material.dart';
 import 'package:basic_flutter_app/LibraryView.dart';
 import 'package:basic_flutter_app/SavedView.dart';
 import 'package:basic_flutter_app/SearchView.dart';
-import 'package:flutter/foundation.dart';
-import 'package:http/http.dart' as http;
 import 'package:basic_flutter_app/Game.dart';
 
 class MainBar extends StatelessWidget {
@@ -33,21 +30,9 @@ class GameManager {
     List<Game> model = [];
     for (Map<String, dynamic> i in jsonData['applist']['apps']) {
       int id = i['appid'];
-      //print(id);
       model.add(Game(gameId: id, name: i['name']));
     }
     return model;
-    //manager.insertGames(model);
-  }
-
-  void fetchGames(http.Client client) async {
-    final response = await client.get(
-        Uri.parse('http://api.steampowered.com/ISteamApps/GetAppList/v0002/'));
-
-    if (response.statusCode == 200) {
-      final games = compute(parseGames, response.body);
-      //manager.insertGames(await games);
-    }
   }
 }
 
@@ -78,7 +63,6 @@ class BarState extends State<Bar> {
   @override
   void initState() {
     super.initState();
-    manager.fetchGames(http.Client());
   }
 
   @override

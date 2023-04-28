@@ -4,11 +4,13 @@ import 'dart:convert';
 import 'package:basic_flutter_app/DataBase.dart';
 import 'package:basic_flutter_app/GameCard.dart';
 import 'package:basic_flutter_app/GameInfo.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:url_launcher/url_launcher.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class GameDetails {
   Future<GameInfo?> fetchGameByAppID(int appid) async {
@@ -65,7 +67,6 @@ class GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    print(gameid);
     info = details.fetchGameByAppID(gameid);
     resetBookmark();
   }
@@ -90,18 +91,19 @@ class GamePageState extends State<GamePage> {
     }
   }
 
-  Future openUrl(String? url) async {
+  Future<void> openUrl(String? url) async {
     if (url == null) return;
     Uri uri = Uri.parse(url);
     if (await canLaunchUrl(uri)) {
-      await launchUrl(uri);
+      await launchUrl(
+        uri,
+        webOnlyWindowName: '_self',
+        mode: LaunchMode.inAppWebView,
+        webViewConfiguration: WebViewConfiguration(),
+      );
+    } else {
+      throw 'Could not launch $url';
     }
-  }
-
-  Future<bool> urlf(String? url) async {
-    if (url == null) return false;
-    Uri uri = Uri.parse(url);
-    return await (canLaunchUrl(uri));
   }
 
   @override
@@ -198,7 +200,10 @@ class GamePageState extends State<GamePage> {
                       ],
                     ),
                   ),
-                  if (info.images.length == 1) Image.network(info.images[0]),
+                  if (info.images.length == 1)
+                    CachedNetworkImage(
+                      imageUrl: info.images[0],
+                    ),
                   if (info.images.length > 1)
                     CarouselSlider.builder(
                       itemCount: info.images.length,
@@ -206,8 +211,8 @@ class GamePageState extends State<GamePage> {
                               int pageViewIndex) =>
                           Container(
                         margin: EdgeInsets.all(0.0),
-                        child: Image.network(
-                          info.images[index],
+                        child: CachedNetworkImage(
+                          imageUrl: info.images[index],
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -320,7 +325,6 @@ class GamePageState extends State<GamePage> {
                                       elevation: 3),
                                   onPressed: info.website != null
                                       ? () {
-                                          print(info.website);
                                           setState(() {
                                             openUrl(info.website);
                                           });
@@ -355,7 +359,6 @@ class GamePageState extends State<GamePage> {
                                   elevation: 3),
                               onPressed: info.website != null
                                   ? () {
-                                      print(info.website);
                                       setState(() {
                                         openUrl(info.website);
                                       });

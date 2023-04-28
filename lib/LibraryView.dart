@@ -29,6 +29,7 @@ class LibraryPageState extends State<LibraryPage> {
   late Future<List<GameCard>> futureComingSoon;
   late Future<List<GameCard>> futureTopSellers;
   late Future<List<GameCard>> futureNewReleases;
+  late Future<List<GameCard>> futureSpecials;
 
   List<int> skipids = [
     1675200,
@@ -107,11 +108,12 @@ class LibraryPageState extends State<LibraryPage> {
 
     futureFeatured = fetchFeaturedGames(client);
     late Future<List<List<GameCard>>> categorygames = fetchCategoryGames(
-        client, ['coming_soon', 'top_sellers', 'new_releases']);
+        client, ['coming_soon', 'top_sellers', 'new_releases', 'specials']);
 
     futureComingSoon = categorygames.then((value) => value[0]);
     futureTopSellers = categorygames.then((value) => value[1]);
     futureNewReleases = categorygames.then((value) => value[2]);
+    futureSpecials = categorygames.then((value) => value[3]);
   }
 
   @override
@@ -121,7 +123,8 @@ class LibraryPageState extends State<LibraryPage> {
         futureFeatured,
         futureComingSoon,
         futureTopSellers,
-        futureNewReleases
+        futureNewReleases,
+        futureSpecials
       ]),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
@@ -129,6 +132,7 @@ class LibraryPageState extends State<LibraryPage> {
           List<GameCard> coming_soon = snapshot.data![1];
           List<GameCard> top_sellers = snapshot.data![2];
           List<GameCard> new_releases = snapshot.data![3];
+          List<GameCard> specials = snapshot.data![4];
 
           return Scaffold(
               backgroundColor: Color(0xffF5F5F5),
@@ -150,6 +154,11 @@ class LibraryPageState extends State<LibraryPage> {
                   Container(
                     height: cardheight,
                     child: GameRowList(list: top_sellers, title: 'Top Sellers'),
+                  ),
+                  SizedBox(height: size),
+                  Container(
+                    height: cardheight,
+                    child: GameRowList(list: specials, title: 'Specials'),
                   ),
                   SizedBox(height: size),
                   Container(
