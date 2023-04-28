@@ -55,7 +55,7 @@ class LibraryPageState extends State<LibraryPage> {
         int id = i['id'];
         if (!skipids.contains(id) && !s.contains(id)) {
           count++;
-          final info = await details.fetchGameByAppID(id);
+          final info = await details.fetchGameByAppID(client, id);
           if (info != null && info.unsafecontent == false) {
             s.add(id);
             model.add(GameCard.fromMap(i));
@@ -86,7 +86,7 @@ class LibraryPageState extends State<LibraryPage> {
           int id = i['id'];
           if (!skipids.contains(id) && !s.contains(id) && i['type'] == 0) {
             count++;
-            final info = await details.fetchGameByAppID(id);
+            final info = await details.fetchGameByAppID(client, id);
             if (info != null && info.unsafecontent == false) {
               s.add(id);
               model.add(GameCard.fromMap(i));
@@ -160,11 +160,11 @@ class LibraryPageState extends State<LibraryPage> {
                     height: cardheight,
                     child: GameRowList(list: featured, title: 'Featured'),
                   ),
-                  /*SizedBox(height: size),
+                  SizedBox(height: size),
                   Container(
                     height: cardheight,
                     child: GameRowList(list: coming_soon, title: 'Coming Soon'),
-                  ),*/
+                  ),
                   SizedBox(height: size),
                   Container(
                     height: cardheight,
@@ -175,12 +175,12 @@ class LibraryPageState extends State<LibraryPage> {
                     height: cardheight,
                     child: GameRowList(list: specials, title: 'Specials'),
                   ),
-                  /*SizedBox(height: size),
+                  SizedBox(height: size),
                   Container(
                     height: cardheight,
                     child:
                         GameRowList(list: new_releases, title: 'New Releases'),
-                  ),*/
+                  ),
                 ],
               ));
         } else if (snapshot.hasError) {

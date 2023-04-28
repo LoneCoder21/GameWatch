@@ -13,7 +13,6 @@ class DbManager {
   Future openDb() async {
     _database = await openDatabase(join(await getDatabasesPath(), "ss.db"),
         version: 1, onCreate: (Database db, int version) async {
-      //await db.execute("CREATE TABLE games(id INTEGER PRIMARY KEY autoincrement, name TEXT)");
       await db.execute(
           "CREATE TABLE saved(id INTEGER PRIMARY KEY autoincrement, name TEXT, image TEXT, timestamp INTEGER)");
     });
@@ -78,7 +77,7 @@ class DbManager {
       if (response.statusCode == 200) {
         final jsonData = json.decode(response.body);
         List<String> types = ["game", "dlc", "demo"];
-        if (jsonData['${game.gameId}']['success'].toString() == "false" ||
+        if (jsonData['${game.gameId}']['success'] == false ||
             !types.contains(
                 jsonData['${game.gameId}']['data']['type'].toString())) {
           continue;

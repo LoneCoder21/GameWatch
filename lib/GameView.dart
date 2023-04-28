@@ -13,20 +13,19 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class GameDetails {
-  Future<GameInfo?> fetchGameByAppID(int appid) async {
+  Future<GameInfo?> fetchGameByAppID(http.Client client, int appid) async {
     String key = dotenv.env['KEY']!;
 
-    final response = await http.get(Uri.parse(
+    final response = await client.get(Uri.parse(
         'https://store.steampowered.com/api/appdetails?key=${key}&appids=${appid}'));
 
     if (response.statusCode == 200) {
       final data = json.decode(response.body);
-      if (data['${appid}']['success'] == 'false') {
+      if (data['${appid}']['success'] == false) {
         return null;
       }
       return GameInfo.fromMap(data['${appid}']['data']);
     }
-
     return null;
   }
 }
@@ -67,7 +66,7 @@ class GamePageState extends State<GamePage> {
   @override
   void initState() {
     super.initState();
-    info = details.fetchGameByAppID(gameid);
+    info = details.fetchGameByAppID(http.Client(), gameid);
     resetBookmark();
   }
 
