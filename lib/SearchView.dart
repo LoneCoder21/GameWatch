@@ -64,7 +64,10 @@ class GameManager {
         List<String> types = ["game", "dlc", "demo"];
         if (jsonData['${game.gameId}']['success'].toString() == "false" ||
             !types.contains(
-                jsonData['${game.gameId}']['data']['type'].toString())) {
+                jsonData['${game.gameId}']['data']['type'].toString()) ||
+            jsonData['${game.gameId}']['data']['content_descriptors']['ids']
+                    .length >
+                0) {
           continue;
         }
         String img = jsonData['${game.gameId}']['data']['header_image'];

@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:basic_flutter_app/GameCard.dart';
+import 'package:basic_flutter_app/GameView.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:basic_flutter_app/GameRowListView.dart';
@@ -25,6 +26,7 @@ class LibraryPage extends StatefulWidget {
 class LibraryPageState extends State<LibraryPage> {
   final size = 10.0;
   final cardheight = 190.0;
+  final GameDetails details = GameDetails();
   late Future<List<GameCard>> futureFeatured;
   late Future<List<GameCard>> futureComingSoon;
   late Future<List<GameCard>> futureTopSellers;
@@ -39,18 +41,25 @@ class LibraryPageState extends State<LibraryPage> {
     1059570,
   ];
 
-  Future<List<GameCard>> fetchFeaturedGames(http.Client client) async {
+  Future<List<GameCard>> fetchFeaturedGames(http.Client client,
+      [int limit = 5]) async {
     final response = await client
         .get(Uri.parse('https://store.steampowered.com/api/featured/'));
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       List<GameCard> model = [];
       Set<int> s = {};
+      int count = 0;
       for (Map<String, dynamic> i in jsonData['featured_win']) {
+        if (count > limit) break;
         int id = i['id'];
         if (!skipids.contains(id) && !s.contains(id)) {
-          s.add(id);
-          model.add(GameCard.fromMap(i));
+          count++;
+          final info = await details.fetchGameByAppID(id);
+          if (info != null && info.unsafecontent == false) {
+            s.add(id);
+            model.add(GameCard.fromMap(i));
+          }
         }
       }
       return model;
@@ -60,22 +69,28 @@ class LibraryPageState extends State<LibraryPage> {
   }
 
   Future<List<List<GameCard>>> fetchCategoryGames(
-      http.Client client, List<String> categories) async {
+      http.Client client, List<String> categories,
+      [int limit = 5]) async {
     final response = await client.get(
         Uri.parse('https://store.steampowered.com/api/featuredcategories/'));
 
     if (response.statusCode == 200) {
       final jsonData = json.decode(response.body);
       List<List<GameCard>> models = [];
-
       for (String category in categories) {
         List<GameCard> model = [];
         Set<int> s = {};
+        int count = 0;
         for (Map<String, dynamic> i in jsonData[category]['items']) {
+          if (count > limit) break;
           int id = i['id'];
           if (!skipids.contains(id) && !s.contains(id) && i['type'] == 0) {
-            s.add(id);
-            model.add(GameCard.fromMap(i));
+            count++;
+            final info = await details.fetchGameByAppID(id);
+            if (info != null && info.unsafecontent == false) {
+              s.add(id);
+              model.add(GameCard.fromMap(i));
+            }
           }
         }
         models.add(model);
@@ -145,11 +160,11 @@ class LibraryPageState extends State<LibraryPage> {
                     height: cardheight,
                     child: GameRowList(list: featured, title: 'Featured'),
                   ),
-                  SizedBox(height: size),
+                  /*SizedBox(height: size),
                   Container(
                     height: cardheight,
                     child: GameRowList(list: coming_soon, title: 'Coming Soon'),
-                  ),
+                  ),*/
                   SizedBox(height: size),
                   Container(
                     height: cardheight,
@@ -160,12 +175,12 @@ class LibraryPageState extends State<LibraryPage> {
                     height: cardheight,
                     child: GameRowList(list: specials, title: 'Specials'),
                   ),
-                  SizedBox(height: size),
+                  /*SizedBox(height: size),
                   Container(
                     height: cardheight,
                     child:
                         GameRowList(list: new_releases, title: 'New Releases'),
-                  ),
+                  ),*/
                 ],
               ));
         } else if (snapshot.hasError) {

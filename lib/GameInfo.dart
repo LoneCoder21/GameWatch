@@ -13,6 +13,7 @@ class GameInfo {
   final bool coming_soon;
   final List<String> genres;
   final List<String> images;
+  final bool unsafecontent;
 
   const GameInfo({
     required this.gameId,
@@ -30,6 +31,7 @@ class GameInfo {
     required this.coming_soon,
     required this.genres,
     required this.images,
+    required this.unsafecontent,
   });
 
   factory GameInfo.fromMap(Map<String, dynamic> json) {
@@ -82,6 +84,7 @@ class GameInfo {
     } else {
       images.add(img);
     }
+    bool unsafecontent = (json['content_descriptors']['ids'].length > 0);
     return GameInfo(
       gameId: id,
       name: name,
@@ -98,6 +101,7 @@ class GameInfo {
       coming_soon: coming_soon,
       genres: genres,
       images: images,
+      unsafecontent: unsafecontent,
     );
   }
 }
