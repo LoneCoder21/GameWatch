@@ -47,7 +47,6 @@ class Bar extends StatefulWidget {
 
 class BarState extends State<Bar> {
   int _index = 0;
-  GameManager manager = GameManager();
   static const List<Widget> _widgetOptions = <Widget>[
     LibraryView(),
     SavedView(),

@@ -110,7 +110,6 @@ class DbManager {
       'saved',
       where: "id = ${appid}",
     );
-    print(maps.length);
     return maps.length == 1;
   }
 }
