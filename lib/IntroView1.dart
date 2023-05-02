@@ -56,6 +56,11 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
+              Center(
+                child:
+                    Image.asset('assets/game_watch_icon_512.png', width: 100),
+              ),
+              const SizedBox(height: 30),
               const Text(
                 'Welcome to GameWatch',
                 style: TextStyle(fontWeight: FontWeight.bold, fontSize: 30),

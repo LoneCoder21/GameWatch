@@ -16,6 +16,10 @@ class IntroView2 extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Center(
+              child: Image.asset('assets/game_watch_icon_512.png', width: 100),
+            ),
+            const SizedBox(height: 30),
+            Center(
               child: const Text(
                 'See the latest games',
                 style: TextStyle(fontWeight: FontWeight.normal, fontSize: 18),
