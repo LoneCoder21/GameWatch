@@ -40,6 +40,10 @@ class _HomePageState3 extends State<HomePage3> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Center(
+              child: Image.asset('assets/game_watch_icon_512.png', width: 100),
+            ),
+            const SizedBox(height: 30),
             const Text(
               'Let\'s begin!',
               style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
