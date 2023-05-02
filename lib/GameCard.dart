@@ -1,3 +1,5 @@
+import 'GameInfo.dart';
+
 class GameCard {
   final int gameId;
   final String name;
@@ -14,6 +16,14 @@ class GameCard {
       gameId: json['id'],
       name: json['name'],
       headerImg: json['header_image'],
+    );
+  }
+
+  factory GameCard.fromInfo(GameInfo info) {
+    return GameCard(
+      gameId: info.gameId,
+      name: info.name,
+      headerImg: info.img,
     );
   }
 
