@@ -1,4 +1,4 @@
-package com.aneelam.basic_flutter_app
+package com.aneelam.gamewatch
 
 import io.flutter.embedding.android.FlutterActivity
 

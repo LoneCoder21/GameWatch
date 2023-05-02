@@ -1,7 +1,7 @@
-import 'package:basic_flutter_app/DataBase.dart';
+import 'package:gamewatch/DataBase.dart';
 import 'package:flutter/material.dart';
-import 'package:basic_flutter_app/GameView.dart';
-import 'package:basic_flutter_app/GameCard.dart';
+import 'package:gamewatch/GameView.dart';
+import 'package:gamewatch/GameCard.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
 class GameRowList extends StatelessWidget {

@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:basic_flutter_app/GameCard.dart';
-import 'package:basic_flutter_app/GameView.dart';
+import 'package:gamewatch/GameCard.dart';
+import 'package:gamewatch/GameView.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:basic_flutter_app/GameRowListView.dart';
-import 'package:basic_flutter_app/Game.dart';
+import 'package:gamewatch/GameRowListView.dart';
+import 'package:gamewatch/Game.dart';
 
 class LibraryView extends StatelessWidget {
   const LibraryView({super.key});
@@ -55,7 +55,7 @@ class LibraryPageState extends State<LibraryPage> {
         int id = i['id'];
         if (!skipids.contains(id) && !s.contains(id)) {
           count++;
-          final info = await details.fetchGameByAppID(id);
+          final info = await details.fetchGameByAppID(client, id);
           if (info != null && info.unsafecontent == false) {
             s.add(id);
             model.add(GameCard.fromMap(i));
@@ -86,7 +86,7 @@ class LibraryPageState extends State<LibraryPage> {
           int id = i['id'];
           if (!skipids.contains(id) && !s.contains(id) && i['type'] == 0) {
             count++;
-            final info = await details.fetchGameByAppID(id);
+            final info = await details.fetchGameByAppID(client, id);
             if (info != null && info.unsafecontent == false) {
               s.add(id);
               model.add(GameCard.fromMap(i));
@@ -160,11 +160,11 @@ class LibraryPageState extends State<LibraryPage> {
                     height: cardheight,
                     child: GameRowList(list: featured, title: 'Featured'),
                   ),
-                  /*SizedBox(height: size),
+                  SizedBox(height: size),
                   Container(
                     height: cardheight,
                     child: GameRowList(list: coming_soon, title: 'Coming Soon'),
-                  ),*/
+                  ),
                   SizedBox(height: size),
                   Container(
                     height: cardheight,
@@ -175,12 +175,12 @@ class LibraryPageState extends State<LibraryPage> {
                     height: cardheight,
                     child: GameRowList(list: specials, title: 'Specials'),
                   ),
-                  /*SizedBox(height: size),
+                  SizedBox(height: size),
                   Container(
                     height: cardheight,
                     child:
                         GameRowList(list: new_releases, title: 'New Releases'),
-                  ),*/
+                  ),
                 ],
               ));
         } else if (snapshot.hasError) {

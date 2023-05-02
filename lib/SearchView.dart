@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:basic_flutter_app/DataBase.dart';
-import 'package:basic_flutter_app/Game.dart';
-import 'package:basic_flutter_app/GameCard.dart';
-import 'package:basic_flutter_app/GameView.dart';
+import 'package:gamewatch/DataBase.dart';
+import 'package:gamewatch/Game.dart';
+import 'package:gamewatch/GameCard.dart';
+import 'package:gamewatch/GameView.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class SearchView extends StatelessWidget {
@@ -27,6 +26,8 @@ class SearchPage extends StatefulWidget {
 }
 
 class GameManager {
+  final GameDetails details = GameDetails();
+
   List<Game> parseGames(String responseBody) {
     final jsonData = json.decode(responseBody);
     List<Game> model = [];
@@ -52,28 +53,17 @@ class GameManager {
       Future<List<Game>> gamelist, http.Client client, String text,
       [int amount = 10]) async {
     List<GameCard> gamecards = [];
-    String key = dotenv.env['KEY']!;
     for (final game in await gamelist) {
       if (gamecards.length >= amount) break;
       if (!game.name.toLowerCase().startsWith(text.toLowerCase())) continue;
-      final response = await client.get(Uri.parse(
-          'https://store.steampowered.com/api/appdetails?key=${key}&appids=${game.gameId}'));
+      int id = game.gameId;
 
-      if (response.statusCode == 200) {
-        final jsonData = json.decode(response.body);
-        List<String> types = ["game", "dlc", "demo"];
-        if (jsonData['${game.gameId}']['success'].toString() == "false" ||
-            !types.contains(
-                jsonData['${game.gameId}']['data']['type'].toString()) ||
-            jsonData['${game.gameId}']['data']['content_descriptors']['ids']
-                    .length >
-                0) {
-          continue;
-        }
-        String img = jsonData['${game.gameId}']['data']['header_image'];
-        gamecards.add(
-            GameCard(gameId: game.gameId, name: game.name, headerImg: img));
+      List<String> types = ["game", "dlc", "demo"];
+      final info = await details.fetchGameByAppID(client, id);
+      if (info == null || !types.contains(info.type) || info.unsafecontent) {
+        continue;
       }
+      gamecards.add(GameCard(gameId: id, name: game.name, headerImg: info.img));
     }
     return gamecards;
   }
