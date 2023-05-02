@@ -62,14 +62,12 @@ class GameInfo {
         criticsite = json['metacritic']['url'];
       }
     }
-
     bool coming_soon = json['release_date']['coming_soon'];
     String releasedate = json['release_date']['date'];
     String? website = null;
     if (json['website'] != null) {
       website = json['website'];
     }
-
     List<String> genres = [];
     if (json['genres'] != null) {
       for (Map<String, dynamic> m in json['genres']) {
@@ -78,7 +76,6 @@ class GameInfo {
     } else {
       genres.add('Tagless');
     }
-
     List<String> images = [];
     if (json['screenshots'] != null) {
       for (Map<String, dynamic> m in json['screenshots']) {
@@ -97,7 +94,6 @@ class GameInfo {
       16,
       17,
     ];
-
     bool unsafecontent = false;
     if (json['content_descriptors']['ids'] != null)
       for (int cid in json['content_descriptors']['ids']) {
@@ -107,7 +103,6 @@ class GameInfo {
         }
       }
     String type = json['type'];
-
     return GameInfo(
       gameId: id,
       type: type,
