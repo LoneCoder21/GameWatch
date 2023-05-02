@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'dart:async';
 import 'package:gamewatch/GameCard.dart';
-import 'package:gamewatch/GameView.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:gamewatch/GameRowListView.dart';
 import 'package:gamewatch/Game.dart';
+import 'package:gamewatch/GameCache.dart';
+
+import 'GameInfo.dart';
 
 class LibraryView extends StatelessWidget {
   const LibraryView({super.key});
@@ -26,7 +28,6 @@ class LibraryPage extends StatefulWidget {
 class LibraryPageState extends State<LibraryPage> {
   final size = 10.0;
   final cardheight = 190.0;
-  final GameDetails details = GameDetails();
   late Future<List<GameCard>> futureFeatured;
   late Future<List<GameCard>> futureComingSoon;
   late Future<List<GameCard>> futureTopSellers;
@@ -55,7 +56,7 @@ class LibraryPageState extends State<LibraryPage> {
         int id = i['id'];
         if (!skipids.contains(id) && !s.contains(id)) {
           count++;
-          final info = await details.fetchGameByAppID(client, id);
+          GameInfo? info = await getGame(id);
           if (info != null && info.unsafecontent == false) {
             s.add(id);
             model.add(GameCard.fromMap(i));
@@ -86,7 +87,7 @@ class LibraryPageState extends State<LibraryPage> {
           int id = i['id'];
           if (!skipids.contains(id) && !s.contains(id) && i['type'] == 0) {
             count++;
-            final info = await details.fetchGameByAppID(client, id);
+            GameInfo? info = await getGame(id);
             if (info != null && info.unsafecontent == false) {
               s.add(id);
               model.add(GameCard.fromMap(i));
