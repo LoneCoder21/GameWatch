@@ -8,6 +8,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:gamewatch/GameCache.dart';
+
+import 'GameInfo.dart';
 
 class SearchView extends StatelessWidget {
   const SearchView({super.key});
@@ -26,8 +29,6 @@ class SearchPage extends StatefulWidget {
 }
 
 class GameManager {
-  final GameDetails details = GameDetails();
-
   List<Game> parseGames(String responseBody) {
     final jsonData = json.decode(responseBody);
     List<Game> model = [];
@@ -59,7 +60,7 @@ class GameManager {
       int id = game.gameId;
 
       List<String> types = ["game", "dlc", "demo"];
-      final info = await details.fetchGameByAppID(client, id);
+      GameInfo? info = await getGame(id);
       if (info == null || !types.contains(info.type) || info.unsafecontent) {
         continue;
       }
