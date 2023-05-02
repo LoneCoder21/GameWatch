@@ -1,10 +1,10 @@
 import 'dart:convert';
-import 'package:basic_flutter_app/DataBase.dart';
+import 'package:gamewatch/DataBase.dart';
 import 'package:flutter/material.dart';
-import 'package:basic_flutter_app/LibraryView.dart';
-import 'package:basic_flutter_app/SavedView.dart';
-import 'package:basic_flutter_app/SearchView.dart';
-import 'package:basic_flutter_app/Game.dart';
+import 'package:gamewatch/LibraryView.dart';
+import 'package:gamewatch/SavedView.dart';
+import 'package:gamewatch/SearchView.dart';
+import 'package:gamewatch/Game.dart';
 
 class MainBar extends StatelessWidget {
   const MainBar({super.key});

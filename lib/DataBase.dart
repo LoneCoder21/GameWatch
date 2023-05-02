@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'package:basic_flutter_app/GameCard.dart';
+import 'package:gamewatch/GameCard.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:basic_flutter_app/Game.dart';
+import 'package:gamewatch/Game.dart';
 import 'package:http/http.dart' as http;
 
 class DbManager {

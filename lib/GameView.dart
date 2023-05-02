@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:basic_flutter_app/DataBase.dart';
-import 'package:basic_flutter_app/GameCard.dart';
-import 'package:basic_flutter_app/GameInfo.dart';
+import 'package:gamewatch/DataBase.dart';
+import 'package:gamewatch/GameCard.dart';
+import 'package:gamewatch/GameInfo.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';

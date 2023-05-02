@@ -1,13 +1,12 @@
 import 'dart:convert';
 
-import 'package:basic_flutter_app/DataBase.dart';
-import 'package:basic_flutter_app/Game.dart';
-import 'package:basic_flutter_app/GameCard.dart';
-import 'package:basic_flutter_app/GameView.dart';
+import 'package:gamewatch/DataBase.dart';
+import 'package:gamewatch/Game.dart';
+import 'package:gamewatch/GameCard.dart';
+import 'package:gamewatch/GameView.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 
 class SearchView extends StatelessWidget {

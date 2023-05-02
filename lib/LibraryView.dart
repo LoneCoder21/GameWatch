@@ -1,11 +1,11 @@
 import 'dart:convert';
 import 'dart:async';
-import 'package:basic_flutter_app/GameCard.dart';
-import 'package:basic_flutter_app/GameView.dart';
+import 'package:gamewatch/GameCard.dart';
+import 'package:gamewatch/GameView.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:basic_flutter_app/GameRowListView.dart';
-import 'package:basic_flutter_app/Game.dart';
+import 'package:gamewatch/GameRowListView.dart';
+import 'package:gamewatch/Game.dart';
 
 class LibraryView extends StatelessWidget {
   const LibraryView({super.key});

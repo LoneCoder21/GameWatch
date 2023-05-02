@@ -1,6 +1,6 @@
-import 'package:basic_flutter_app/IntroView2.dart';
+import 'package:gamewatch/IntroView2.dart';
 import 'package:flutter/material.dart';
-import 'package:basic_flutter_app/MainBar.dart';
+import 'package:gamewatch/MainBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class IntroView3 extends StatelessWidget {
