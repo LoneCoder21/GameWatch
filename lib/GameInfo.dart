@@ -94,14 +94,12 @@ class GameInfo {
       16,
       17,
     ];
-    bool unsafecontent = false;
-    if (json['content_descriptors']['ids'] != null)
-      for (int cid in json['content_descriptors']['ids']) {
-        if (unsafeids.contains(cid)) {
-          unsafecontent = true;
-          break;
-        }
-      }
+    bool unsafecontent = true;
+    if (json['content_descriptors'] != null &&
+        json['content_descriptors']['ids'] != null &&
+        json['content_descriptors']['ids'].length == 0) {
+      unsafecontent = false;
+    }
     String type = json['type'];
     return GameInfo(
       gameId: id,
